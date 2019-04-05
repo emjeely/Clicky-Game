@@ -1,0 +1,10 @@
+.score{
+  color:white;
+  background-color: black;
+  padding:2%;
+}
+/* @media screen and (max-width: 640px){
+.score{
+  font-size:25px;
+}
+} */
