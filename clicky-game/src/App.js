@@ -2,15 +2,16 @@ import React, { Component } from 'react';
 // import logo from './logo.svg';
 // import './App.css';
 
-import Header from "./components/Header";
-import Points from "./components/Points";
-import Wrap from "./components/Wrap";
-import images from "./";
+import Header from "./components/Header/index.js";
+import Points from "./components/Points/index.js";
+import Wrap from "./components/Wrap/index.js";
+import Container from "./components/Container/container.js";
+import data from "./images.json";
 
 
 class App extends Component {
   state = {
-    images,
+    data,
     score: 0,
     maxScore: 0
 };
@@ -30,13 +31,13 @@ resetData = data => {
     return this.shuffle(resetData);
   };
 
-handleCorrectGuess = newData => {
+handleCorrectGuess = newImages => {
     const { maxScore, score } = this.state;
     const newScore = score + 1;
     const newTopScore = Math.max(newScore, maxScore);
 
     this.setState({
-      images: this.shuffle(newData),
+      data: this.shuffle(newImages),
       score: newScore,
       maxScore: newTopScore
     });
@@ -44,7 +45,7 @@ handleCorrectGuess = newData => {
 
   handleIncorrectGuess = data => {
     this.setState({
-      images: this.resetData(data),
+      data: this.resetData(data),
       score: 0
     });
   };
@@ -53,7 +54,7 @@ handleCorrectGuess = newData => {
 
 update = (id) => {
     let guessedCorrectly = false;
-    const newImages = this.state.images.map(item => {
+    const newImages = this.state.data.map(item => {
         const newItem = { ...item };
         if (newItem.id === id) {
             if (!newItem.clicked) {
@@ -75,19 +76,20 @@ render() {
         <Points 
           score={this.state.score}
           maxscore={this.state.maxScore}
-        />
-      <div className="container-fluid">
-                
-        {this.state.images.map(item => (
+        >
+        {this.state.data.map(item => (
           <Wrap
             clicked={item.clicked}
+            alt={item.id}
             id={item.id}
+            key={item.id}
+            src={process.env.PUBLIC_URL + item.image}
             image={item.image}
             update={this.update}
           />
-        ))} 
-             
-        </div>
+        ))}
+        </Points>
+     
     </div>    
   )
 }

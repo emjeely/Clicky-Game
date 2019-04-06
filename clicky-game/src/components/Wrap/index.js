@@ -9,6 +9,7 @@ const Wrap = props => {
       <img className = "imgclass" alt = "not" src = {props.image} onClick = {() => props.update(props.id)}/>
 
       </div>
+      
     </div>
   )
 }
